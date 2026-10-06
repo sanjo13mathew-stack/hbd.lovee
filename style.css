@@ -1,0 +1,569 @@
+/* ==========================================================================
+   RESET & MOBILE FOUNDATIONS
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --rose-primary: #ff3366;
+  --rose-deep: #ba1346;
+  --rose-glow: rgba(255, 51, 102, 0.45);
+  --gold-warm: #ffd166;
+  --magenta-1: #1f010f;
+  --magenta-2: #59042b;
+  --magenta-3: #d90452;
+  --magenta-4: #ff3377;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Alex Brush', cursive;
+  --font-sans: 'Outfit', sans-serif;
+  
+  /* Safe Area Insets for Mobile / Notches */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
+  overflow: hidden;
+  position: fixed;
+  background-color: #fce8ed;
+  font-family: var(--font-sans);
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+/* ==========================================================================
+   LUMINOUS DREAMY AURORA BACKGROUND
+   ========================================================================== */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 15%, #fffbf8 0%, #feeaf0 40%, #fbd5df 75%, #f7c3ce 100%);
+  transition: opacity 1.2s ease;
+}
+
+.aurora-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  animation: floatOrb 18s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+  width: 80vw;
+  height: 80vw;
+  max-width: 500px;
+  max-height: 500px;
+  background: radial-gradient(circle, #ffb3c6 0%, rgba(255, 179, 198, 0) 70%);
+  top: -10%;
+  left: -15%;
+  animation-duration: 16s;
+}
+
+.orb-2 {
+  width: 85vw;
+  height: 85vw;
+  max-width: 550px;
+  max-height: 550px;
+  background: radial-gradient(circle, #ffe5b4 0%, rgba(255, 229, 180, 0) 70%);
+  bottom: -15%;
+  right: -15%;
+  animation-duration: 22s;
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  width: 60vw;
+  height: 60vw;
+  max-width: 400px;
+  max-height: 400px;
+  background: radial-gradient(circle, #ffccd5 0%, rgba(255, 204, 213, 0) 70%);
+  top: 40%;
+  left: 20%;
+  animation-duration: 19s;
+  animation-delay: -8s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -30px) scale(1.08); }
+  100% { transform: translate(-20px, 25px) scale(0.95); }
+}
+
+#particleCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.fullscreen-app {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
+  background: transparent;
+  overflow: hidden;
+  transition: background 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+
+.fullscreen-app.theme-magenta {
+  background: radial-gradient(circle at 50% 30%, var(--magenta-4) 0%, var(--magenta-3) 30%, var(--magenta-2) 65%, var(--magenta-1) 100%);
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.5);
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: calc(var(--sat) + clamp(16px, 4vh, 44px));
+  padding-bottom: calc(var(--sab) + clamp(16px, 3vh, 32px));
+  padding-left: calc(var(--sal) + 18px);
+  padding-right: calc(var(--sar) + 18px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(0.95);
+}
+
+.scene.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* ==========================================================================
+   SCENE 1: ROMANTIC OPENING (MOBILE OPTIMIZED)
+   ========================================================================== */
+.scene-header {
+  text-align: center;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.whisper-tag {
+  font-family: var(--font-sans);
+  font-size: clamp(0.68rem, 2.4vw, 0.78rem);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #ba325b;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.romantic-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.25rem, 4.8vw, 1.85rem);
+  color: #4a242f;
+  font-weight: 400;
+  padding: 0 8px;
+  line-height: 1.25;
+}
+
+.heart-container {
+  position: relative;
+  width: clamp(140px, 40vmin, 220px);
+  height: clamp(140px, 40vmin, 220px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.glow-aura {
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--rose-glow) 0%, rgba(255, 51, 102, 0) 70%);
+  transform: scale(0.85);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  filter: blur(14px);
+  opacity: 0.75;
+}
+
+.heart-pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 77, 126, 0.45);
+  animation: heartRipple 2.2s cubic-bezier(0.1, 0.7, 0.1, 1) infinite;
+}
+
+@keyframes heartRipple {
+  0% { transform: scale(0.7); opacity: 0.85; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.heart-3d {
+  position: relative;
+  width: 82%;
+  height: 82%;
+  transform-origin: center center;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: drop-shadow(0 14px 26px rgba(186, 19, 70, 0.45));
+  animation: romanticHeartbeat 2.2s ease-in-out infinite;
+}
+
+.heart-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@keyframes romanticHeartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.08); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.05); }
+  56% { transform: scale(1); }
+}
+
+.pull-mechanism {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: clamp(160px, 22vh, 210px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  touch-action: none;
+}
+
+.pull-svg {
+  position: absolute;
+  top: 0;
+  width: 180px;
+  height: 130px;
+  pointer-events: none;
+}
+
+.pull-track {
+  fill: none;
+  stroke: rgba(200, 140, 160, 0.45);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dasharray: 5 5;
+}
+
+.pull-string {
+  fill: none;
+  stroke: #ff3b68;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 2px 6px rgba(255, 59, 104, 0.5));
+}
+
+.pull-handle {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: clamp(56px, 15vmin, 68px);
+  height: clamp(56px, 15vmin, 68px);
+  cursor: grab;
+  z-index: 10;
+  touch-action: none;
+}
+
+.pull-handle:active {
+  cursor: grabbing;
+}
+
+.handle-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffe082 0%, #ff6b8b 55%, #e60049 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(230, 0, 73, 0.45), inset 0 2px 4px rgba(255, 255, 255, 0.9);
+  transition: transform 0.15s ease;
+}
+
+.handle-inner:active {
+  transform: scale(0.92);
+}
+
+.handle-icon {
+  color: #ffffff;
+  font-size: clamp(1.4rem, 4vmin, 1.65rem);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  animation: bounceHeart 1.6s ease-in-out infinite;
+}
+
+@keyframes bounceHeart {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15) translateY(2px); }
+}
+
+.pull-instruction {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.pull-text {
+  font-size: clamp(0.72rem, 2.5vw, 0.84rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: #7d3f52;
+  text-transform: uppercase;
+}
+
+.pull-tap-hint {
+  font-size: clamp(0.68rem, 2.2vw, 0.76rem);
+  letter-spacing: 0.04em;
+  color: #a86c7d;
+}
+
+/* ==========================================================================
+   SCENE 2: BIRTHDAY REVEAL
+   ========================================================================== */
+.scene-reveal {
+  justify-content: center;
+  gap: clamp(14px, 3.5vh, 28px);
+  text-align: center;
+}
+
+.wish-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.35rem, 5.2vw, 2rem);
+  color: rgba(255, 235, 242, 0.95);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  padding: 0 12px;
+}
+
+.typography-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: center;
+}
+
+.reveal-word {
+  font-family: var(--font-serif);
+  font-size: clamp(3.8rem, 16vmin, 6.8rem);
+  font-weight: 400;
+  line-height: 1.02;
+  color: #ffffff;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.45), 0 0 50px rgba(255, 180, 205, 0.7);
+  opacity: 0;
+  transform: scale(0.85) translateY(20px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-lover-sub {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  color: #ffe0eb;
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 1s ease 0.6s, transform 1s ease 0.6s;
+  text-shadow: 0 2px 18px rgba(255, 60, 120, 0.7);
+}
+
+.scene-reveal.active .wish-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scene-reveal.active #wordHappy.show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.scene-reveal.active #wordBirthday.show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.scene-reveal.active .reveal-lover-sub.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   SCENE 3 & 4: BLOOMING HEART TREE & LETTER
+   ========================================================================== */
+.scene-tree {
+  padding-top: calc(var(--sat) + 14px);
+  padding-bottom: calc(var(--sab) + 14px);
+  justify-content: space-between;
+}
+
+.tree-header {
+  text-align: center;
+  z-index: 2;
+  min-height: 28px;
+}
+
+.tree-hint {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.2rem, 4.4vw, 1.55rem);
+  color: #5c2c3b;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  padding: 0 10px;
+}
+
+.tree-hint.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tree-canvas-container {
+  position: relative;
+  width: 100vw;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#treeCanvas {
+  width: 100%;
+  height: 100%;
+  max-width: 650px;
+  max-height: 650px;
+  display: block;
+}
+
+/* Final Romantic Letter Card (Compact & Mobile-Safe) */
+.final-card-content {
+  position: absolute;
+  bottom: calc(var(--sab) + clamp(12px, 2.5vh, 24px));
+  left: 50%;
+  transform: translateX(-50%) translateY(25px) scale(0.95);
+  width: calc(100% - 32px);
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: clamp(16px, 2.6vh, 22px) 18px clamp(12px, 2vh, 16px);
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(186, 19, 70, 0.22), 0 2px 6px rgba(0, 0, 0, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+}
+
+.final-card-content.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.envelope-stamp {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9184a;
+  background: rgba(255, 51, 102, 0.08);
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.final-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 5.2vw, 1.85rem);
+  font-weight: 600;
+  color: #ba1346;
+  margin-bottom: 4px;
+}
+
+.final-sub {
+  font-size: clamp(0.78rem, 2.9vw, 0.9rem);
+  line-height: 1.45;
+  color: #59353e;
+  margin-bottom: 6px;
+}
+
+.letter-signature {
+  font-family: var(--font-script);
+  font-size: clamp(1.5rem, 5.5vw, 1.75rem);
+  color: #e60049;
+  margin-bottom: 10px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.replay-btn {
+  background: linear-gradient(135deg, #ff3366 0%, #c9184a 100%);
+  color: #fff;
+  border: none;
+  padding: 9px 24px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(201, 24, 74, 0.35);
+  touch-action: manipulation;
+}
+
+.replay-btn:active {
+  transform: scale(0.95);
+}
+
+.tree-tap-hint {
+  display: block;
+  font-size: 0.68rem;
+  color: #9c5c6d;
+  margin-top: 3px;
+}

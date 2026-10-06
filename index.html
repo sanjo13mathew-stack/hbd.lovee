@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#fce8ed" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title> A Little Something for You Kunjavee 💗 </title>
+  
+  <!-- Romantic Serif & Soft Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Ambient Petals & Fairy Lights Canvas -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- Aurora Mesh Ambient Layers -->
+  <div class="aurora-bg">
+    <div class="aurora-orb orb-1"></div>
+    <div class="aurora-orb orb-2"></div>
+    <div class="aurora-orb orb-3"></div>
+  </div>
+
+  <main class="fullscreen-app" id="birthdayApp">
+    
+    <!-- ================= SCENE 1: ROMANTIC OPENING ================= -->
+    <section class="scene scene-pull active" id="scenePull">
+      <header class="scene-header">
+        <span class="whisper-tag">with all my heart</span>
+        <h2 class="romantic-subtitle">to the one who makes my world bloom...</h2>
+      </header>
+
+      <div class="heart-container" id="heartWrapper">
+        <div class="glow-aura" id="glowAura"></div>
+        <div class="heart-pulse-ring" id="pulseRing"></div>
+        
+        <!-- Romantic 3D Heart -->
+        <div class="heart-3d" id="mainHeart">
+          <svg viewBox="0 0 100 90" class="heart-svg">
+            <defs>
+              <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff9ebb" />
+                <stop offset="35%" stop-color="#ff3366" />
+                <stop offset="85%" stop-color="#ba1346" />
+                <stop offset="100%" stop-color="#7a092b" />
+              </linearGradient>
+              <radialGradient id="heartSpecular" cx="32%" cy="28%" r="42%">
+                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.85)" />
+                <stop offset="65%" stop-color="rgba(255, 255, 255, 0)" />
+              </radialGradient>
+              <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <path class="heart-base" d="M 50 85 C 10 50, 0 25, 25 10 C 38 2, 48 10, 50 20 C 52 10, 62 2, 75 10 C 100 25, 90 50, 50 85 Z" fill="url(#heartGrad)" filter="url(#softGlow)" />
+            <path class="heart-highlight" d="M 50 85 C 10 50, 0 25, 25 10 C 38 2, 48 10, 50 20 C 52 10, 62 2, 75 10 C 100 25, 90 50, 50 85 Z" fill="url(#heartSpecular)" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Pull Cord Mechanism -->
+      <div class="pull-mechanism" id="pullArea">
+        <svg class="pull-svg" id="pullSvg" viewBox="0 0 200 160">
+          <path id="pullTrack" class="pull-track" d="M 100 10 Q 100 65 100 120" />
+          <path id="pullString" class="pull-string" d="M 100 10 Q 100 10 100 10" />
+        </svg>
+        
+        <div class="pull-handle" id="pullHandle">
+          <div class="handle-inner">
+            <span class="handle-icon">♥</span>
+          </div>
+        </div>
+        
+        <div class="pull-instruction">
+          <span class="pull-text">PULL &amp; HOLD MY HEART</span>
+          <span class="pull-tap-hint">(or tap heart)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCENE 2: MAGICAL BIRTHDAY REVEAL ================= -->
+    <section class="scene scene-reveal" id="sceneReveal">
+      <p class="wish-text" id="wishText">close your eyes &amp; make a wish, my love…</p>
+      <div class="typography-wrapper">
+        <h1 class="reveal-word" id="wordHappy">Happy</h1>
+        <h1 class="reveal-word" id="wordBirthday">Birthday</h1>
+        <p class="reveal-lover-sub" id="wordLover">to the love of my life</p>
+      </div>
+    </section>
+
+    <!-- ================= SCENE 3 & 4: BLOOMING HEART TREE ================= -->
+    <section class="scene scene-tree" id="sceneTree">
+      <header class="tree-header">
+        <p class="tree-hint" id="treeHint">every branch, every bloom… all for you</p>
+      </header>
+
+      <div class="tree-canvas-container" id="treeContainer">
+        <canvas id="treeCanvas"></canvas>
+      </div>
+
+      <!-- Final Romantic Letter Card -->
+      <footer class="final-card-content" id="finalMessage">
+        <div class="envelope-stamp">forever &amp; always</div>
+        <h2 class="final-title">Happy Birthday, My Love 💗</h2>
+        <p class="final-sub">
+          May your life blossom with as much joy, warmth, and magic as you have brought into mine.
+        </p>
+        <div class="letter-signature">Yours, endlessly ✨</div>
+        <div class="button-group">
+          <button class="replay-btn" id="replayBtn">
+            <span>Relive The Magic ✨</span>
+          </button>
+        </div>
+        <span class="tree-tap-hint">tap anywhere to shower love petals 🌸</span>
+      </footer>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
